@@ -22,6 +22,53 @@ struct job{
 };
 typedef struct job *jobs;
 
+
+void ordenar(jobs &jobs1)
+{
+    job *aux1 = jobs1;
+    while(aux1!=NULL)
+    {
+        job *aux2 = jobs1->sgte;
+        while(aux2!=NULL)
+        {
+            if(aux1->numjob > aux2->numjob)
+            {
+                float inicio=aux2->inicio;
+                int numjob=aux2->numjob;
+                float rafaga=aux2->rafaga;
+                int prioridad=aux2->prioridad;
+                int q=aux2->q;
+
+                aux2->inicio=aux1->inicio;
+                aux2->numjob=aux1->numjob;
+                aux2->rafaga=aux1->rafaga;
+                aux2->prioridad=aux1->prioridad;
+                aux2->q=aux1->q;
+
+                aux1->inicio=inicio;
+                aux1->numjob=numjob;
+                aux1->rafaga=rafaga;
+                aux1->prioridad=prioridad;
+                aux1->q=q;
+            }
+            aux2=aux2->sgte;
+        }
+        aux1=aux1->sgte;
+    }
+}
+
+bool repetido(jobs jobs1, int numjob)
+{
+    job *aux = jobs1;
+    while(aux!=NULL)
+    {
+        if(aux->numjob==numjob)
+            return true;
+        aux=aux->sgte;
+    }
+    return false;
+}
+
 void agregar(float inicio, float rafaga, int prioridad, int numjob, int q, jobs &jobs1)
 {
     jobs aux;
